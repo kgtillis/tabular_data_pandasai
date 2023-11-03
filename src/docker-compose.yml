@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  # PostgreSQL server to store prompts and results
+  pandasai_demo_postgres:
+    container_name: pandasai_demo_postgres
+    image: postgres:12.14
+    ports:
+      - '8376:5432'
+    environment:
+      - POSTGRES_PASSWORD=password
+    restart: on-failure
+
+  # MongoDB server to store metadata about the request being made
+  pandasai_demo_mongo:
+    container_name: pandasai_demo_mongo
+    image: mongo:4.4.20
+    ports:
+      - '8377:27017'
+    restart: on-failure
+
+  # pandas ai streamlit app
+  pandasai_streamlit_app:
+    container_name: pandasai_streamlit_app
+    build: .
+    ports:
+      - '8378:8504'
+    restart: on-failure
